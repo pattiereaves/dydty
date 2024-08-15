@@ -12,5 +12,6 @@
 
 <x-forms.field :$label :$name>
     <input {{ $attributes($defaults) }}>
+    <x-forms.error :$name />
 </x-forms.field>
 
