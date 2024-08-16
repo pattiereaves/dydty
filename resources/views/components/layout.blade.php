@@ -20,15 +20,27 @@
                                 <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                                 alt="Your Company">
                             </a>
-
                         </div>
                     </div>
-                    <div class="hidden md:block">
+                    <div>
                         <div class="ml-4 flex items-center md:ml-6">
                             <div class="relative ml-3">
-                                <div>
-                                    Login
-                                </div>
+                                @auth
+                                    <form method="POST" action="/logout">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button class="text-white font-bold rounded hover:bg-black/50 p-2">
+                                            Log out
+                                        </button>
+                                    </form>
+                                @endauth
+
+                                @guest
+                                    <a href="{{ url('/login') }}" class="text-white font-bold">
+                                        Login
+                                    </a>
+                                @endguest
                             </div>
                         </div>
                     </div>
