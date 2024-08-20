@@ -21,7 +21,8 @@ class TaskFactory extends Factory
         return [
             'name' => fake()->sentence(),
             'completion_interval' => 86400, // Day in seconds
-            'household_id' => Household::factory()->createOne()->id,
+            // 'household_id' => Household::factory()->createOne()->id,
+            'household_id' => 1,
         ];
     }
 }

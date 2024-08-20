@@ -20,8 +20,11 @@ class DatabaseSeeder extends Seeder
         $household = Household::factory(1)->create();
 
         $users = User::factory(2)
-            // ->for($household)
-            ->create([ 'password' => 'password' ]);
+            ->create([
+                'password' => 'password',
+                // 'household_id' => 1,
+                // 'household_id' => $household->first()->id
+            ]);
 
         // $tasks = Task::factory()
         //     ->for($household)
