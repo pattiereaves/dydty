@@ -16,15 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        $household = Household::factory(1)->create();
 
-        $users = User::factory(2)
-            ->create([
-                'password' => 'password',
-                // 'household_id' => 1,
-                // 'household_id' => $household->first()->id
-            ]);
+        // $this->call(HouseholdSeeder::class);
+        $this->call(TaskSeeder::class);
+
+        // $household = Household::factory(1)->create();
+
+        // $users = User::factory(2)
+        //     ->create([
+        //         'password' => 'password',
+        //         // 'household_id' => 1,
+        //         // 'household_id' => $household->first()->id
+        //     ]);
+
+        //     $t
 
         // $tasks = Task::factory()
         //     ->for($household)
