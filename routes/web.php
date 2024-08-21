@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskHistoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +22,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'index']);
     Route::get('/task/{task}', [TaskController::class, 'show']);
+
+    Route::post('/task/{task}/complete', [TaskHistoryController::class, 'store']);
+    Route::delete('/task/{task}/uncomplete', [TaskHistoryController::class, 'destroy']);
 });
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');

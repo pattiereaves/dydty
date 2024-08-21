@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
+use App\Models\TaskHistory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTaskHistoryRequest;
 use App\Http\Requests\UpdateTaskHistoryRequest;
-use App\Models\TaskHistory;
 
 class TaskHistoryController extends Controller
 {
@@ -27,9 +30,18 @@ class TaskHistoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskHistoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'task_id' => 'required|numeric',
+        ]);
+
+        Task::findOrFail($validatedData['task_id'])->histories()->create([
+            'user_id' => Auth::user()->id,
+            ...$validatedData,
+        ]);
+
+        return redirect('/task/'.$validatedData['task_id']);
     }
 
     /**
@@ -59,8 +71,14 @@ class TaskHistoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TaskHistory $taskHistory)
+    public function destroy(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'task_id' => 'required|numeric',
+        ]);
+
+        Task::findOrFail($validatedData['task_id'])->histories()->first()->delete();
+
+        return redirect('/task/'.$validatedData['task_id']);
     }
 }

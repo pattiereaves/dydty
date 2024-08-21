@@ -2,7 +2,7 @@
     A way for a household to communicate if a repeated task is done.
 
     @auth
-        You are logged in, {{ Auth::user()->name }}!
+        You are logged in, {{ Auth::user()->name }}! <a href="{{ url('/tasks') }}">View your tasks.</a>
     @endauth
 
     @guest
