@@ -15,7 +15,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-    $user = Auth::user();
+        $user = Auth::user();
 
         return view('tasks.index', [ 'user' => $user ]);
     }
@@ -41,7 +41,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('tasks.show', ['task' => $task ]);
     }
 
     /**

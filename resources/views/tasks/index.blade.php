@@ -4,7 +4,19 @@
 
         <ul>
             @foreach ($household->tasks as $task)
-                <li>{{ $task->name }}</li>
+                <li class="flex flex-wrap items-center justify-start mb-3">
+                    <x-forms.taskCheck :$task class="mr-4 grow-1 w-full mb-1" />
+                    <div class="grow-1 w-full">
+                        <span>
+                            Every <strong>{{ $task->human_readable_completion_interval }}</strong>
+                        </span>
+                        |
+                        <span>
+                            Last completed: {{ $task->last_completed }}
+                        </span>
+                        <a href="{{ url('task/'.$task->id) }}" class="text-sm flex grow-1 w-full">View history</a>
+                    </div>
+                </li>
             @endforeach
         </ul>
     @endforeach

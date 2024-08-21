@@ -20,6 +20,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'index']);
+    Route::get('/task/{task}', [TaskController::class, 'show']);
 });
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
