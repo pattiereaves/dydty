@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HouseholdController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
@@ -22,6 +23,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'index']);
     Route::get('/task/{task}', [TaskController::class, 'show']);
+
+    Route::get('/households', [HouseholdController::class, 'index']);
 
     Route::post('/task/{task}/complete', [TaskHistoryController::class, 'store']);
     Route::delete('/task/{task}/uncomplete', [TaskHistoryController::class, 'destroy']);

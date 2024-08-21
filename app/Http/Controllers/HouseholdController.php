@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Household;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreHouseholdRequest;
 use App\Http\Requests\UpdateHouseholdRequest;
-use App\Models\Household;
 
 class HouseholdController extends Controller
 {
@@ -13,7 +14,15 @@ class HouseholdController extends Controller
      */
     public function index()
     {
-        //
+
+        $otherHouseholds = Household::all()->filter(function ($household) {
+            return !$household->users()->find(Auth::user());
+        });
+
+        return view('households.index', [
+            'userHouseholds' => Auth::user()->households,
+            'otherHouseholds' => $otherHouseholds,
+        ]);
     }
 
     /**
