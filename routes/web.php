@@ -1,23 +1,23 @@
 <?php
 
-use App\Http\Controllers\HouseholdController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\TaskHistoryController;
+use App\Http\Controllers\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::middleware('guest')->group(function () {
+    Route::get('/login', [SessionController::class, 'create']);
     Route::get('/register', [RegisteredUserController::class, 'create']);
     Route::post('/register', [RegisteredUserController::class, 'store']);
 
-    Route::get('/login', [SessionController::class, 'create']);
     Route::post('/login', [SessionController::class, 'store']);
-
 });
 
 Route::middleware('auth')->group(function () {
@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/task/{task}/complete', [TaskHistoryController::class, 'store']);
     Route::delete('/task/{task}/uncomplete', [TaskHistoryController::class, 'destroy']);
+
+    Route::get('/households/add', [HouseholdController::class, 'create']);
+    Route::post('/households/add', [HouseholdController::class, 'store']);
 });
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');

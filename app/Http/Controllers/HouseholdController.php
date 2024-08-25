@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Household;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreHouseholdRequest;
 use App\Http\Requests\UpdateHouseholdRequest;
+
 
 class HouseholdController extends Controller
 {
@@ -30,15 +32,24 @@ class HouseholdController extends Controller
      */
     public function create()
     {
-        //
+        return view('households.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreHouseholdRequest $request)
+    public function store()
     {
-        //
+
+        $validAttributes = request()->validate([
+            'name' => ['required', 'min:4'],
+        ]);
+
+        $household = Household::create($validAttributes);
+
+        Auth::user()->households()->attach($household);
+
+        return redirect('/households');
     }
 
     /**

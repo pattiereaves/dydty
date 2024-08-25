@@ -28,4 +28,9 @@ class RegisteredUserController extends Controller
 
         return redirect('/');
     }
+
+    public function loggedOut()
+    {
+        return redirect()->route('login');
+    }
 }
