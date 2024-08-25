@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreHouseholdRequest;
 use App\Http\Requests\UpdateHouseholdRequest;
-
+use App\Models\User;
 
 class HouseholdController extends Controller
 {
@@ -57,7 +57,9 @@ class HouseholdController extends Controller
      */
     public function show(Household $household)
     {
-        //
+        return view('households.show', [
+            'household' => $household
+        ]);
     }
 
     /**
@@ -82,5 +84,23 @@ class HouseholdController extends Controller
     public function destroy(Household $household)
     {
         //
+    }
+
+    public function join(Household $household)
+    {
+        $user = Auth::user();
+
+        $household->users()->attach($user);
+
+        return redirect('households/'.$household->id);
+    }
+
+    public function leave(Household $household)
+    {
+        $user = Auth::user();
+
+        $household->users()->detach($user);
+
+        return redirect('households/'.$household->id);
     }
 }

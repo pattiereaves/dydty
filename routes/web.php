@@ -13,12 +13,13 @@ Route::get('/', function () {
 });
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [SessionController::class, 'create']);
     Route::get('/register', [RegisteredUserController::class, 'create']);
     Route::post('/register', [RegisteredUserController::class, 'store']);
 
-    Route::post('/login', [SessionController::class, 'store']);
+    Route::get('login', [SessionController::class, 'create'])->name('login');
+    Route::post('login', [SessionController::class, 'store']);
 });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'index']);
@@ -31,6 +32,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/households/add', [HouseholdController::class, 'create']);
     Route::post('/households/add', [HouseholdController::class, 'store']);
+
+    Route::get('/households/{household}', [HouseholdController::class, 'show']);
+
+    Route::post('households/{household}/join', [HouseholdController::class, 'join']);
+    Route::post('households/{household}/leave', [HouseholdController::class, 'leave']);
 });
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
