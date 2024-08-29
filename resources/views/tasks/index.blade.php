@@ -19,5 +19,7 @@
                 </li>
             @endforeach
         </ul>
+
+        <a href="{{ url('/households/'.$household->id.'/task/add') }}">Add a task</a>
     @endforeach
 </x-layout>

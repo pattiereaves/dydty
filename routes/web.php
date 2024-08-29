@@ -23,6 +23,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'index']);
+
     Route::get('/task/{task}', [TaskController::class, 'show']);
 
     Route::get('/households', [HouseholdController::class, 'index']);
@@ -35,8 +36,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/households/{household}', [HouseholdController::class, 'show']);
 
-    Route::post('households/{household}/join', [HouseholdController::class, 'join']);
-    Route::post('households/{household}/leave', [HouseholdController::class, 'leave']);
+    Route::post('/households/{household}/join', [HouseholdController::class, 'join']);
+    Route::post('/households/{household}/leave', [HouseholdController::class, 'leave']);
+
+    Route::get('/households/{household}/task/add', [TaskController::class, 'create']);
+    Route::post('/households/{household}/task/add', [TaskController::class, 'store']);
 });
 
 Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
