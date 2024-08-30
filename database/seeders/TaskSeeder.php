@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Household;
+use App\Models\Task;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +18,8 @@ class TaskSeeder extends Seeder
 
         $household = Household::first();
 
-        Task::factory(3)->hasAttached($household)->create();
+        Task::factory(3)->create([
+            'household_id' => $household->id
+        ]);
     }
 }

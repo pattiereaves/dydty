@@ -8,6 +8,9 @@
             <a href="{{ url('/') }}" class="mr-6">
                 Cancel
             </a>
+            <a href="{{ url('/register') }}" class="mr-6">
+                Register
+            </a>
             <x-forms.button>
                 Login
             </x-forms.button>
