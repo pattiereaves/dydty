@@ -1,6 +1,4 @@
-<x-layout>
-    <h1 class="mb-2 text-3xl font-bold">Households</h1>
-
+<x-layout title="Households">
     <h2 class="text-dark mb-2 text-2xl font-semibold">
         Yours
     </h2>

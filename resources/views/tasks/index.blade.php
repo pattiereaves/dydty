@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="All Tasks">
     @foreach ($user->households as $household)
         <h2 class="text-lg font-bold border-b-2 mb-2">
             {{ $household->name }} household tasks

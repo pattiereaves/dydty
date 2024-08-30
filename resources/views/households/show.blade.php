@@ -1,25 +1,27 @@
-<x-layout>
-    <h1>Household: {{ $household->name}} members</h1>
+<x-layout title="{{ $household->name }} household">
+    @if($household->users->contains(Auth::user()))
+        <form method="POST" action="{{ url('/households/'.$household->id.'/leave') }}">
+            @csrf
+            @method('POST')
+            <button class="p-2 rounded bg-black/10 mb-5">
+                Leave this household
+            </button>
+        </form>
+        @else
+        <form method="POST" action="{{ url('/households/'.$household->id.'/join') }}">
+            @csrf
+            @method('POST')
+            <button class="p-2 rounded bg-black/10 mb-5">
+                Join this household
+            </button>
+        </form>
+    @endif
 
-    <ul>
+    <ul class="mb-5">
         @foreach ($household->users as $user)
             <li>{{ $user->name }}</li>
         @endforeach
     </ul>
-
-    @if($household->users->contains(Auth::user()))
-        <x-forms.form method="POST" action="{{ url('/households/'.$household->id.'/leave') }}">
-            <x-forms.button>
-                Leave this household
-            </x-forms.button>
-        </x-forms.form>
-        @else
-        <x-forms.form method="POST" action="{{ url('/households/'.$household->id.'/join') }}">
-            <x-forms.button>
-                Join this household
-            </x-forms.button>
-        </x-forms.form>
-    @endif
 
     <a href="{{ url('households') }}">Back to list of households</a>
     <span class="px-2">
