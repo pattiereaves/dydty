@@ -22,4 +22,10 @@
     @endif
 
     <a href="{{ url('households') }}">Back to list of households</a>
+    <span class="px-2">
+        |
+    </span>
+    <a href="{{ url('/tasks') }}">
+        Back to all tasks
+    </a>
 </x-layout>

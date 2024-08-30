@@ -1,6 +1,12 @@
 <x-layout>
     @foreach ($user->households as $household)
-        <h2 class="text-lg font-bold border-b-2 mb-2">{{ $household->name }} household tasks</h2>
+        <h2 class="text-lg font-bold border-b-2 mb-2">
+            {{ $household->name }} household tasks
+            <a href="{{ url('households/'.$household->id )}}" class="w-1 h-1 text-xs rounded-lg bg-black/10 border-blue p-1">
+                <span class="sr-only">View all members</span>
+                🧑‍🤝‍🧑
+            </a>
+        </h2>
 
         <ul>
             @foreach ($household->tasks as $task)
