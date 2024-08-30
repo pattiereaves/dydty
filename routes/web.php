@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'index']);
 
     Route::get('/task/{task}', [TaskController::class, 'show']);
+    Route::post('/task/{task}/archive', [TaskController::class, 'archive']);
 
     Route::get('/households', [HouseholdController::class, 'index']);
 

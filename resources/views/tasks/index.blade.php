@@ -4,6 +4,10 @@
 
         <ul>
             @foreach ($household->tasks as $task)
+                @if (!$task->is_active)
+                    @continue
+                @endif
+
                 <li class="flex flex-wrap items-center justify-start mb-3">
                     <x-forms.taskCheck :$task class="mr-4 grow-1 w-full mb-1" />
                     <div class="grow-1 w-full">
@@ -14,7 +18,18 @@
                         <span>
                             Last completed: {{ $task->last_completed }}
                         </span>
-                        <a href="{{ url('task/'.$task->id) }}" class="text-sm flex grow-1 w-full">View history</a>
+                        <div class="text-sm flex grow-1 w-full">
+                            <a href="{{ url('task/'.$task->id) }}" class="">View history</a>
+                            <span class="mx-1">|</span>
+                            <form method="POST" action="{{ url('task/'.$task->id.'/archive') }}">
+                                @csrf
+                                @method('POST')
+                                <input type="hidden" name="task_id" value="{{ $task->id }}" />
+                                <button class="inline">
+                                    Archive this task
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </li>
             @endforeach

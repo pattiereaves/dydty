@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Carbon\CarbonInterval;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
@@ -21,9 +21,9 @@ class Task extends Model
         'is_complete',
     ];
 
-    public function household(): HasOne
+    public function household(): BelongsTo
     {
-        return $this->hasOne(Household::class);
+        return $this->belongsTo(Household::class);
     }
 
     public function histories(): HasMany

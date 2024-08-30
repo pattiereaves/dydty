@@ -9,6 +9,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
@@ -17,9 +18,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::user()->load(['households.tasks']);
 
-        return view('tasks.index', [ 'user' => $user ]);
+        return view('tasks.index', compact('user'));
     }
 
     /**
@@ -44,7 +45,7 @@ class TaskController extends Controller
 
         Auth::user()->households()->findOrFail($validTaskAttributes['household_id'])->tasks()->create($validTaskAttributes);
 
-        return redirect('/households/'.$validTaskAttributes['household_id'] );
+        return redirect('/tasks' );
 
     }
 
@@ -78,5 +79,26 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function archive(Request $request)
+    {
+
+
+        $currentUser = Auth::user();
+        $task = Task::findOrFail($request->get('task_id'));
+
+        // Check that the user belongs to the household that owns the task
+        if (!$currentUser->households->contains($task->household)) {
+            throw ValidationException::withMessages([
+                'You are not authorized to archive this task'
+            ]);
+        }
+
+        $task->update([
+            'is_active' => false
+        ]);
+
+        return redirect('/tasks');
     }
 }
