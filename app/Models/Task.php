@@ -19,6 +19,7 @@ class Task extends Model
         'human_readable_completion_interval',
         'last_completed',
         'is_complete',
+        'last_completed_by',
     ];
 
     public function household(): BelongsTo
@@ -60,5 +61,16 @@ class Task extends Model
         $secondsSinceLastCompleted = $last_completed->created_at->diffInSeconds(Carbon::now());
 
         return $secondsSinceLastCompleted < $this->completion_interval;
+    }
+
+    public function getLastCompletedByAttribute(): string
+    {
+        $last_completed = $this->histories()->first();
+
+        if (!$last_completed) {
+            return '';
+        }
+
+        return $last_completed->user->name;
     }
 }

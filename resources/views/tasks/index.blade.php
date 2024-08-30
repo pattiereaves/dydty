@@ -23,6 +23,9 @@
                         |
                         <span>
                             Last completed: {{ $task->last_completed }}
+                            @if ($task->last_completed !== 'Never')
+                               by {{ $task->last_completed_by }}
+                            @endif
                         </span>
                         <div class="text-sm flex grow-1 w-full">
                             <a href="{{ url('task/'.$task->id) }}" class="">View history</a>
