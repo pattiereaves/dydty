@@ -8,11 +8,12 @@ use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\TaskHistoryController;
 use App\Http\Controllers\RegisteredUserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
     Route::get('/register', [RegisteredUserController::class, 'create']);
     Route::post('/register', [RegisteredUserController::class, 'store']);
 
@@ -22,7 +23,10 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/tasks', [TaskController::class, 'index']);
+    Route::get('/', [TaskController::class, 'index']);
+    Route::get('/tasks', function () {
+        redirect('/');
+    });
 
     Route::get('/task/{task}', [TaskController::class, 'show']);
     Route::post('/task/{task}/archive', [TaskController::class, 'archive']);

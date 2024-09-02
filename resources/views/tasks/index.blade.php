@@ -1,8 +1,26 @@
 <x-layout title="All Tasks">
+    @if ($user->households->count() === 0)
+        <section class="space-y-2">
+            <h2 class="text-lg">
+                You don't belong to any households.
+            </h2>
+
+            <p>
+                There are two options:
+            </p>
+
+            <ol class="list-decimal list-inside">
+                <li><a href="{{ url('/households/add') }}">Create a new household.</a></li>
+                <li>Ask a member of an existing household to add you.</li>
+            </ol>
+        </section>
+    @endif
+
     @foreach ($user->households as $household)
         <h2 class="text-lg font-bold border-b-2 mb-2">
             {{ $household->name }} household tasks
-            <a href="{{ url('households/'.$household->id )}}" class="w-1 h-1 text-xs rounded-lg bg-black/10 border-blue p-1">
+            <a href="{{ url('households/' . $household->id) }}"
+                class="w-1 h-1 text-xs rounded-lg bg-black/10 border-blue p-1">
                 <span class="sr-only">View all members</span>
                 🧑‍🤝‍🧑
             </a>
@@ -24,13 +42,13 @@
                         <span>
                             Last completed: {{ $task->last_completed }}
                             @if ($task->last_completed !== 'Never')
-                               by {{ $task->last_completed_by }}
+                                by {{ $task->last_completed_by }}
                             @endif
                         </span>
                         <div class="text-sm flex grow-1 w-full">
-                            <a href="{{ url('task/'.$task->id) }}" class="">View history</a>
+                            <a href="{{ url('task/' . $task->id) }}" class="">View history</a>
                             <span class="mx-1">|</span>
-                            <form method="POST" action="{{ url('task/'.$task->id.'/archive') }}">
+                            <form method="POST" action="{{ url('task/' . $task->id . '/archive') }}">
                                 @csrf
                                 @method('POST')
                                 <input type="hidden" name="task_id" value="{{ $task->id }}" />
@@ -44,6 +62,6 @@
             @endforeach
         </ul>
 
-        <a href="{{ url('/households/'.$household->id.'/task/add') }}">Add a task</a>
+        <a href="{{ url('/households/' . $household->id . '/task/add') }}">Add a task</a>
     @endforeach
 </x-layout>
