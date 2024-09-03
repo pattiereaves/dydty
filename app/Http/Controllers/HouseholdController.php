@@ -89,14 +89,27 @@ class HouseholdController extends Controller
     {
         $user = Auth::user();
 
-        $household->users()->attach($user);
+        $household->users()->attach($user, ['invitation_pending' => false]);
 
         return redirect('households/'.$household->id);
     }
 
     public function leave(Household $household)
     {
-        $user = Auth::user();
+        // User must belong to household to remove a member.
+        $currentUser = Auth::user();
+
+        if (!$currentUser->households->contains($household)) {
+            throw ValidationException::withMessages([
+                "You can't remove members of a house to which you don't belong.",
+            ]);
+        }
+
+        $userId = request()->get('user_id');
+
+        $user = is_numeric($userId) ?
+            User::findOrFail($userId) :
+            Auth::user();
 
         $household->users()->detach($user);
 

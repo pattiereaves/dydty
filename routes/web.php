@@ -25,7 +25,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [TaskController::class, 'index']);
     Route::get('/tasks', function () {
-        redirect('/');
+        return redirect('/');
     });
 
     Route::get('/task/{task}', [TaskController::class, 'show']);
