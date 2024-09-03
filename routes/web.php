@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/households/{household}/join', [HouseholdController::class, 'join']);
     Route::post('/households/{household}/leave', [HouseholdController::class, 'leave']);
+    Route::post('/households/{household}/invite', [HouseholdController::class, 'invite']);
 
     Route::get('/households/{household}/task/add', [TaskController::class, 'create']);
     Route::post('/households/{household}/task/add', [TaskController::class, 'store']);
