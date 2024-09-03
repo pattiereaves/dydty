@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreHouseholdRequest;
 use App\Http\Requests\UpdateHouseholdRequest;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class HouseholdController extends Controller
 {
@@ -47,7 +48,7 @@ class HouseholdController extends Controller
 
         $household = Household::create($validAttributes);
 
-        Auth::user()->households()->attach($household);
+        Auth::user()->households()->attach($household, ['invitation_pending' => false]);
 
         return redirect('/households');
     }
@@ -57,9 +58,7 @@ class HouseholdController extends Controller
      */
     public function show(Household $household)
     {
-        return view('households.show', [
-            'household' => $household
-        ]);
+        return view('households.show', compact('household'));
     }
 
     /**
@@ -101,6 +100,46 @@ class HouseholdController extends Controller
 
         $household->users()->detach($user);
 
+        return redirect('households/'.$household->id);
+    }
+
+    public function invite(Household $household)
+    {
+        $validAttributes = request()->validate([
+            'email' => ['email'],
+        ]);
+
+        // Check if a user exists.
+        $user = User::where('email', $validAttributes['email'])->first();
+
+        // If a user does not exist, create one.
+        if (!$user) {
+            $user = User::create([
+                'email' => $validAttributes['email'],
+                'name' => '',
+                'password' => bcrypt(str()->random(16)),
+            ]);
+        }
+
+        // If user is already a member of this household, throw exception.
+        if ($household->users()->where('email', $validAttributes['email'])->first()) {
+            if ($user->households()->find($household->id)->pivot->invitation_pending) {
+                throw ValidationException::withMessages([
+                    'email' => 'User has pending invitation',
+                ]);
+            }
+
+            throw ValidationException::withMessages([
+                'email' => 'User already is a member of this household',
+            ]);
+        }
+
+        // Attach that user to the household.
+        $user->households()->attach($household, ['invitation_pending' => true]);
+
+        // Send the user an email to create their account.
+
+        // Redirect to household page.
         return redirect('households/'.$household->id);
     }
 }

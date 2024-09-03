@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Household::class)->constrained()->cascadeOnDelete();
+            $table->unique(['user_id', 'household_id']);
         });
     }
 

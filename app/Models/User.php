@@ -51,6 +51,6 @@ class User extends Authenticatable
 
     public function households(): BelongsToMany
     {
-        return $this->belongsToMany(Household::class);
+        return $this->belongsToMany(Household::class)->withPivot('invitation_pending');
     }
 }
