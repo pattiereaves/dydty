@@ -73,7 +73,7 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [TaskController::class, 'index']);
+    Route::get('/', [TaskController::class, 'index'])->name('tasks');
     Route::get('/tasks', function () {
         return redirect('/');
     });
@@ -97,6 +97,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/households/{household}/task/add', [TaskController::class, 'create']);
     Route::post('/households/{household}/task/add', [TaskController::class, 'store']);
+
+    Route::get('/profile/{user}/edit', [RegisteredUserController::class, 'edit'])->name('user.edit');
+    Route::put('/profile/{user}/edit', [RegisteredUserController::class, 'update']);
+
+    Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
 });
 
-Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');

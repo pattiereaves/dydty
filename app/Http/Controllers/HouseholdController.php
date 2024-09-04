@@ -89,7 +89,12 @@ class HouseholdController extends Controller
     {
         $user = Auth::user();
 
-        $household->users()->attach($user, ['invitation_pending' => false]);
+        // Make sure user is not already attached.
+        if ($household->users->contains($user->id)) {
+            $household->users()->updateExistingPivot($user->id, ['invitation_pending' => false]);
+        } else {
+            $household->users()->attach($user, ['invitation_pending' => false]);
+        }
 
         return redirect('households/'.$household->id);
     }

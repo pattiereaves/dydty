@@ -22,12 +22,10 @@
     </form>
 @endif
 
-{{ $user->name ?? $user->email }}
+{{ $user->name }}
 
 @if ($user->name === '')
-    <span class="text-slate-500">
-        {{ $user->email }}
-    </span>
+    {{ $user->email }}
 @endif
 
 @if ($user->pivot->invitation_pending)

@@ -1,6 +1,4 @@
-<x-layout>
-    <h1>Register</h1>
-
+<x-layout title="Register">
     <x-forms.form method="POST" action="">
         <x-forms.input label="Name" name="name" required/>
         <x-forms.divider />

@@ -71,6 +71,6 @@ class Task extends Model
             return '';
         }
 
-        return $last_completed->user->name;
+        return $last_completed->user->name ?: $last_completed->user->email;
     }
 }

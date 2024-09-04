@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Did You Do That Yet?</title>
+    <title>{{ empty($title) ? '' : "{$title} - " }}Did You Do That Yet? </title>
     @vite(['resources/js/app.js'])
 </head>
 
@@ -58,6 +58,12 @@
         </header>
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                @if (session('success'))
+                    <div class="mb-2 text-red">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 {{ $slot }}
             </div>
         </main>
