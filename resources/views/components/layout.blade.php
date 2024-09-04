@@ -27,7 +27,10 @@
                         <div class="ml-4 flex items-center md:ml-6">
                             <div class="relative ml-3">
                                 @auth
-                                    <form method="POST" action="/logout">
+                                    <a href="{{ url('/profile/'.Auth::user()->id.'/edit')}}" class="inline text-white font-bold rounded hover:bg-black/50 p-2">
+                                        Edit profile
+                                    </a>
+                                    <form method="POST" action="/logout" class="inline-flex">
                                         @csrf
                                         @method('DELETE')
 
