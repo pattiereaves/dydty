@@ -4,7 +4,7 @@ to do
 - [x] check off a task when i click the button
 - [x] create a household
 - [x] join a household
-- [x] list all the households 
+- [x] list all the households
 - [x] view the members of a household
 - [x] add a recurring task
 - [x] archive a task
@@ -29,3 +29,5 @@ to do
 - [] add button to delete invitation
 - [] add page to show pending invitations
 - [] send email when invited to a household
+- [] make it obvious when a task is overdue and by how much
+
