@@ -116,7 +116,8 @@ class HouseholdController extends Controller
             User::findOrFail($userId) :
             Auth::user();
 
-        $household->users()->detach($user);
+        $household->users()
+            ->detach($user);
 
         return redirect('households/'.$household->id);
     }

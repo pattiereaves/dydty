@@ -20,12 +20,20 @@
         @foreach ($households as $household)
             <li class="space-y-4 space-y-reverse">
                 @if ($household->pivot->invitation_pending)
-                    <form method="POST" action="{{ url('/households/' . $household->id . '/join') }}">
+                    <form class="inline-flex" method="POST" action="{{ url('/households/' . $household->id . '/join') }}">
                         @csrf
                         @method('POST')
 
                         <button class="bg-blue rounded-xl p-2 text-white">
                             📥 Accept invitation to {{ $household->name }}
+                        </button>
+                    </form>
+                    <form class="inline-flex" method="POST" action="{{ url('/households/' . $household->id . '/leave') }}">
+                        @csrf
+                        @method('POST')
+
+                        <button>
+                            Decline
                         </button>
                     </form>
                 @else
