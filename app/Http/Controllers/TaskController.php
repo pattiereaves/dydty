@@ -54,7 +54,9 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('tasks.show', ['task' => $task ]);
+        $task->load('histories.user');
+
+        return view('tasks.show', compact('task'));
     }
 
     /**

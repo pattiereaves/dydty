@@ -71,7 +71,6 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [SessionController::class, 'store']);
 });
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('tasks');
     Route::get('/tasks', function () {
