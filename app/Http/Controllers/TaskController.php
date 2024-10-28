@@ -18,9 +18,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $user = Auth::user()->load(['households.tasks']);
+        $user = Auth::user();
 
-        return view('tasks.index', compact('user'));
+        $households = $user->households()
+            ->with(['tasks'])
+            ->withPivot('invitation_pending')
+            ->orderBy('household_user.invitation_pending', 'desc')
+            ->get();
+
+        return view('tasks.index', compact('user', 'households'));
     }
 
     /**

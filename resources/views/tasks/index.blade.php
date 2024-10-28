@@ -17,7 +17,7 @@
     @endif
 
     <ul class="space-y-10">
-        @foreach ($user->households as $household)
+        @foreach ($households as $household)
             <li class="space-y-4 space-y-reverse">
                 @if ($household->pivot->invitation_pending)
                     <form method="POST" action="{{ url('/households/' . $household->id . '/join') }}">
