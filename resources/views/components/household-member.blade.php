@@ -1,11 +1,12 @@
-@props(['user', 'householdId'])
+@props(['user', 'household'])
 
 @php
     $isSelf = Auth::user()->id === $user->id;
+    $isMember = $household->users->contains(Auth::user()->id);
 @endphp
 
-@if (!$isSelf)
-    <form action="{{ url('households/' . $householdId . '/leave') }}" method="POST" class="inline-flex align-middle">
+@if (!$isSelf && $isMember)
+    <form action="{{ url('households/' . $household->id . '/leave') }}" method="POST" class="inline-flex align-middle">
         @csrf
         @method('POST')
         <input type="hidden" name="user_id" value="{{ $user->id }}" />

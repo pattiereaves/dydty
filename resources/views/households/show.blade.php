@@ -56,7 +56,7 @@
     <ul class="mb-5">
         @foreach ($household->users as $user)
             <li>
-                <x-household-member :user="$user" household_id="{{ $household->id }}" />
+                <x-household-member :user="$user" :household="$household" />
             </li>
         @endforeach
     </ul>
