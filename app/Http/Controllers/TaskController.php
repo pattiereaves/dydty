@@ -91,8 +91,6 @@ class TaskController extends Controller
 
     public function archive(Request $request)
     {
-
-
         $currentUser = Auth::user();
         $task = Task::findOrFail($request->get('task_id'));
 

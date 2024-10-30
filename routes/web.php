@@ -90,6 +90,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/households/{household}', [HouseholdController::class, 'show']);
 
+    Route::put('/households/{household}/edit', [HouseholdController::class, 'update']);
+
     Route::post('/households/{household}/join', [HouseholdController::class, 'join']);
     Route::post('/households/{household}/leave', [HouseholdController::class, 'leave']);
     Route::post('/households/{household}/invite', [HouseholdController::class, 'invite']);

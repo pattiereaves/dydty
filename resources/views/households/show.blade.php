@@ -1,7 +1,29 @@
 @php
     $isMember = $household->users->contains(Auth::user());
 @endphp
-<x-layout title="{{ $household->name }} household">
+<x-layout>
+    <x-slot name="title">
+        @if ($isMember)
+        <div>
+            <form method="POST" action="{{ url('/households/' . $household->id . '/edit')}}">
+                @method('PUT')
+                @csrf
+                <input
+                    type="text"
+                    name="name"
+                    label="Household name"
+                    value="{{ $household->name }}"
+                    onchange="this.form.elements.namedItem('name-form').classList.remove('hidden')"
+                />
+                <x-forms.button id="name-form" class="tracking-wide text-xs font-thin hidden">
+                    Save
+                </x-forms.button>
+            </form>
+        </div>
+        @else
+            {{ $household->name }} household
+        @endif
+    </x-slot>
 
     @if ($errors->any())
         <div class="text-red">

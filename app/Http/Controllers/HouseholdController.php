@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreHouseholdRequest;
 use App\Http\Requests\UpdateHouseholdRequest;
 use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
 class HouseholdController extends Controller
@@ -72,9 +73,16 @@ class HouseholdController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHouseholdRequest $request, Household $household)
+    public function update(FormRequest $request, Household $household)
     {
-        //
+        $validName = $request->validate([
+            'name' => ['required', 'min:3'],
+        ]);
+
+        $household->name = $validName['name'];
+        $household->save();
+
+        return redirect('/households/' . $household->id );
     }
 
     /**
