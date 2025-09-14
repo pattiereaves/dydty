@@ -30,7 +30,8 @@ class RegisteredUserController extends Controller
         return redirect('/');
     }
 
-    public function edit(User $user) {
+    public function edit(User $user)
+    {
         if ($user->id !== Auth::user()->id) {
             return redirect('/');
         }
@@ -56,7 +57,7 @@ class RegisteredUserController extends Controller
             'name' => $validAttributes['name'],
             'email' => $validAttributes['email'],
             'password' => empty($validAttributes['password']) ? $user->password :
-                bcrypt($validAttributes['password'])
+                bcrypt($validAttributes['password']),
         ]);
 
         return redirect()->route('user.edit', ['user' => $user])->with('success', 'Profile updated successfully');

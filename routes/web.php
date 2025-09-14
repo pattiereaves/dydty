@@ -1,17 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\SessionController;
 use App\Http\Controllers\HouseholdController;
-use App\Http\Controllers\TaskHistoryController;
 use App\Http\Controllers\RegisteredUserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskHistoryController;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 Route::get('/forgot-password', function () {
@@ -45,7 +44,7 @@ Route::post('/reset-password', function (Request $request) {
         $request->only('email', 'password', 'password_confirmation', 'token'),
         function (User $user, string $password) {
             $user->forceFill([
-                'password' => Hash::make($password)
+                'password' => Hash::make($password),
             ])->setRememberToken(Str::random(60));
 
             $user->save();
@@ -104,4 +103,3 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
 });
-

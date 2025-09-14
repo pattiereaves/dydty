@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Household;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreHouseholdRequest;
-use App\Http\Requests\UpdateHouseholdRequest;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class HouseholdController extends Controller
@@ -20,7 +17,7 @@ class HouseholdController extends Controller
     {
 
         $otherHouseholds = Household::all()->filter(function ($household) {
-            return !$household->users()->find(Auth::user());
+            return ! $household->users()->find(Auth::user());
         });
 
         return view('households.index', [
@@ -82,7 +79,7 @@ class HouseholdController extends Controller
         $household->name = $validName['name'];
         $household->save();
 
-        return redirect('/households/' . $household->id );
+        return redirect('/households/'.$household->id);
     }
 
     /**
@@ -112,7 +109,7 @@ class HouseholdController extends Controller
         // User must belong to household to remove a member.
         $currentUser = Auth::user();
 
-        if (!$currentUser->households->contains($household)) {
+        if (! $currentUser->households->contains($household)) {
             throw ValidationException::withMessages([
                 "You can't remove members of a house to which you don't belong.",
             ]);
@@ -140,7 +137,7 @@ class HouseholdController extends Controller
         $user = User::where('email', $validAttributes['email'])->first();
 
         // If a user does not exist, create one.
-        if (!$user) {
+        if (! $user) {
             $user = User::create([
                 'email' => $validAttributes['email'],
                 'name' => '',

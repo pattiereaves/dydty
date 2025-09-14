@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Task extends Model
 {
@@ -36,14 +36,14 @@ class Task extends Model
     {
         $interval = CarbonInterval::seconds($this->completion_interval)->cascade();
 
-        return $interval->forHumans([ 'parts' => 1 ]);
+        return $interval->forHumans(['parts' => 1]);
     }
 
     public function getLastCompletedAttribute(): string
     {
         $last_completed = $this->histories()->first();
 
-        if (!$last_completed) {
+        if (! $last_completed) {
             return 'Never';
         }
 
@@ -54,7 +54,7 @@ class Task extends Model
     {
         $last_completed = $this->histories()->first();
 
-        if (!$last_completed) {
+        if (! $last_completed) {
             return false;
         }
 
@@ -67,7 +67,7 @@ class Task extends Model
     {
         $last_completed = $this->histories()->first();
 
-        if (!$last_completed) {
+        if (! $last_completed) {
             return '';
         }
 

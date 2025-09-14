@@ -7,7 +7,7 @@ it('belongs to a user', function () {
     // arrange, act, assert
 
     $user = User::factory()->create();
-    $user->households()->create([ 'name' => 'Test Household' ]);
+    $user->households()->create(['name' => 'Test Household']);
     // $household = Household::factory()->create([
     //     'user_id' => $user->id,
     // ]);

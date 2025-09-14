@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class SessionController extends Controller
 {
-    public function create() {
+    public function create()
+    {
         return view('auth.login');
     }
 
@@ -19,10 +19,9 @@ class SessionController extends Controller
             'password' => ['required'],
         ]);
 
-
-        if(!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
-                'email' => 'Sorry, those credentials do not match.'
+                'email' => 'Sorry, those credentials do not match.',
             ]);
         }
 

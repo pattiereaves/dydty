@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateTaskHistoryRequest;
 use App\Models\Task;
 use App\Models\TaskHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreTaskHistoryRequest;
-use App\Http\Requests\UpdateTaskHistoryRequest;
 
 class TaskHistoryController extends Controller
 {

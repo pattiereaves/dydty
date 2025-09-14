@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Household;
-use App\Models\TaskHistory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

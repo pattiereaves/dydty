@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Household;
 use App\Models\Task;
@@ -51,7 +50,7 @@ class TaskController extends Controller
 
         Auth::user()->households()->findOrFail($validTaskAttributes['household_id'])->tasks()->create($validTaskAttributes);
 
-        return redirect('/tasks' );
+        return redirect('/tasks');
 
     }
 
@@ -95,14 +94,14 @@ class TaskController extends Controller
         $task = Task::findOrFail($request->get('task_id'));
 
         // Check that the user belongs to the household that owns the task
-        if (!$currentUser->households->contains($task->household)) {
+        if (! $currentUser->households->contains($task->household)) {
             throw ValidationException::withMessages([
-                'You are not authorized to archive this task'
+                'You are not authorized to archive this task',
             ]);
         }
 
         $task->update([
-            'is_active' => false
+            'is_active' => false,
         ]);
 
         return redirect('/tasks');
