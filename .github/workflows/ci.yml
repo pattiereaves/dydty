@@ -40,8 +40,18 @@ jobs:
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
     - name: Install dependencies
       run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Install Playwright
+      run: |
+        npm install playwright
+        npx playwright install --with-deps
 
     - name: Prepare Laravel Application
       run: |
