@@ -48,10 +48,21 @@ jobs:
     - name: Install dependencies
       run: composer install --no-progress --prefer-dist --optimize-autoloader
 
+    - name: Cache npm dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: ${{ runner.os }}-node-
+
+    - name: Install npm dependencies
+      run: npm ci
+
+    - name: Build frontend assets
+      run: npm run build
+
     - name: Install Playwright
-      run: |
-        npm install playwright
-        npx playwright install --with-deps
+      run: npx playwright install --with-deps
 
     - name: Prepare Laravel Application
       run: |
